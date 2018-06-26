@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <style>
+        body{
+            font-size: 16px;
+            letter-spacing: 3px;
+            background: #412F2B;
+            color: #fff;
+        }
+        header{
+            color: #FDB408;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        li:last-child{
+            border-right: 0;
+        }
+        tr{
+            text-align: center;
+        }
+        .tr_color{
+            background: #D8D4D3;
+            color: #5C5351;
+        }
+        .tip{
+            color: #f00;
+            font-weight: 600;
+        }
+        #rule,#route{
+            margin-top: 15px;
+        }
+        .rule,.route{
+            width: 50%;
+            height: 30px;
+            line-height: 15px;
+        }
+        .nav>.rule a,.route a{
+            font-weight: 600;
+            color: #370A1D;
+            background: #E7E7E7;
+        }
+        .list-inline li{
+            padding: 0;
+        }
+        .list-inline{
+            margin-left: 0;
+        }
+        .nav-pills>li>a{
+            border-radius: 0;
+        }
+        .nav-pills>li+li{
+            margin-left: 0%;
+        }
+        .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus{
+            color: #370A1D;
+            background: #FCB414;
+        }
+        img{
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .line{
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .grep{
+            color: #0078D7;
+            font-weight: 600;
+        }
+        .icon img{
+            width: 23px;
+            height: 18px;
+            vertical-align: middle;
+            margin-top: 12px;
+            padding-right: 3px;
+        }
+        #route span>img{
+            width: 30px;
+            height: 30px;
+            margin-right: 5px;
+            vertical-align: middle;
+            margin-top: 7px;
+        }
+       #route .play img{
+            width: 90px;
+        }
+    </style>
+</head>
+<body>
+    <ul class="list-unstyled list-inline text-center nav nav-pills">
+        <li class="rule active"><a href="#rule" data-toggle="tab">游戏规则</a></li>
+        <li class="route"><a href="#route" data-toggle="tab">路单说明</a></li>
+    </ul>
+    <div class="container">
+        <div class="tab-content">
+            <div class="tab-pane active" id="rule">
+                <header>1.基本规则</header>
+                <p>最初时，会发4张牌，以闲家-庄家-闲家-庄家的顺序各发2张。</p>
+                <img src="img/rules1.png" alt=""/>
+                <p><span class="icon"><img src="img/page.png" alt=""/></span>每个玩家可以选择在闲家(Player)或庄家(Banker)的任何一方下注，并且点数总和接近9的一方为胜。所有下注的获胜方都将获得1比1的赔彩，但由于庄家有着更好的获胜几率，因此庄家获胜时，会收取5%的手续费。</p>
+                <br/>
+                <p><span class="icon"><img src="img/page.png" alt=""/></span>2至9的所有纸牌点数都按标识的数字计算，而纸牌A的点数计算为1，纸牌10与图片纸牌的点数计算为0。</p>
+                <img src="img/rules2.png" alt=""/><br/>
+                <p><span class="icon"><img src="img/page.png" alt=""/></span>同理，所有纸牌的总和为10时，将计算为0。</p>
+                <img src="img/rules3.png" alt=""/>
+                <p><span class="icon"><img src="img/page.png" alt=""/></span>除了在闲家或庄家下注方式外，还有其他的下注方式，如：</p>
+                <table class="table table-bordered">
+                    <tr class="tr_color">
+                        <td>下注方式</td>
+                        <td>赔率</td>
+                    </tr>
+                    <tr>
+                        <td>和(tie)</td>
+                        <td>1赔8</td>
+                    </tr>
+                    <tr>
+                        <td>闲家对子(Play Pair) <br/>(最初发给闲家两张牌是对子)</td>
+                        <td>1赔11</td>
+                    </tr>
+                    <tr>
+                        <td>庄家对子(Bank Pair) <br/> (最初发给庄家两张牌是对子)</td>
+                        <td>1赔11</td>
+                    </tr>
+                </table>
+                <header>2.发牌规则</header>
+                <p>最初发牌结束后，荷官会根据当前点数总和的情况，判断是否追加发牌。</p>
+                <p><span class="icon"><img src="img/page.png" alt=""/></span>闲家的规则</p>
+                <table class="table table-bordered">
+                    <tr class="tr_color">
+                        <td>点数为</td>
+                        <td>闲家追加发牌的规则</td>
+                    </tr>
+                    <tr>
+                        <td>0/1/2/3/4/5</td>
+                        <td>追加一张牌</td>
+                    </tr>
+                    <tr>
+                        <td>6/7</td>
+                        <td>闲家停止发牌,但庄家会按需求追加第三张牌</td>
+                    </tr>
+                    <tr>
+                        <td>8/9</td>
+                        <td>游戏结束,闲家与庄家都会停止发牌.这既是所谓的"天牌"</td>
+                    </tr>
+                </table>
+                <p><span class="icon"><img src="img/page.png" alt=""/></span>庄家的规则</p>
+                <p>如果闲家停止发牌（假设他的点数总和为6或7），庄家的追加发牌只取决于自己纸牌的点数，并以与闲家相同的规则进行追加发牌（0至5时，追加发牌；6或7时，停止发牌）。</p>
+                <p>如果闲家追加了第三张牌，庄家则会根据如下规则进行追加发牌：</p>
+                <table class="table table-bordered">
+                    <tr class="tr_color">
+                        <td>点数为</td>
+                        <td>庄家追加发牌的规则</td>
+                    </tr>
+                    <tr>
+                        <td>0/1/2</td>
+                        <td>无聊闲家的第三张牌是什么,都将追加一张牌</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>除了闲家的第三张为8外,都将追加1张牌(闲家第三张牌为8时,庄家停止发牌)</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>如果闲家第三张牌为2,3,4,5,6,7,将追加1张牌</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>如果闲家第三张牌为4,5,6,7,将追加1张牌</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>如果闲家第三张牌为6,7，将追加1张牌</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>停止发牌</td>
+                    </tr>
+                </table>
+                <header>3.游戏实例</header>
+                <img src="img/rule1.png" alt=""/>
+                <img src="img/rule2.png" alt=""/>
+                <img src="img/rule3.png" alt=""/>
+                <img src="img/rule4.png" alt=""/>
+                <img src="img/rule5.png" alt=""/>
+            </div>
+            <div class="tab-pane" id="route">
+                <header>1.大路</header>
+                <img src="img/rules6.png" alt=""/> <br/> <br/>
+                <p>大路是最常见，并且最受玩家欢迎的一种记录形式。 玩家可以通过大路来分析游戏的趋势，并且还可以根据该趋势进行下注。 大路按照庄一列、闲一列的形式换列排列。出现和时，不会换列，并且会用一条绿色斜线(或圆，上图为隐藏模式)进行表示。</p>
+                  <p>
+                    图标说明：<br/>
+                    <span><img src="img/icon5.png" alt=""/><img src="img/icon6.png" alt=""/><img src="img/icon3.png" alt=""/></span> 分别表示庄/闲/和未能获胜局
+                    <span><img src="img/icon7.png" alt=""/><img src="img/icon8.png" alt=""/><img src="img/icon9.png" alt=""/></span>分别表示庄/闲/和获胜局
+                    <span class="play"><img src="img/icon4.png" alt=""/></span> 左上方红点表示庄对/ 右下方蓝点表示闲对/
+                    表示同时出现庄对与闲对
+                  </p>
+                <header>2.大眼仔路</header>
+                <img src="img/rules7.png" alt=""/> <br/><br/>
+                <p>大眼仔路是为了分析大路的规则性而产生的记录形式。 </p>
+                <p>大眼仔路的起始点是以大路的第2列第2行开始分析记录(如果该位置没有结果，则以第3列第1行开始分析)。</p> <br/>
+                    <p>在大眼仔路中的 <span class="tip">颜色与庄、闲无关</span>，只表示 <span class="line"> 大路的规则性</span>。 (   <span><img
+                            src="img/icon5.png" alt=""/></span>- 表示有规则；  <span><img src="img/icon6.png" alt=""/></span> - 表示无规则 )</p>
+                <p>
+                    大眼仔的路记录规则：<br/>
+                    1) 在大路中出现直落的情况，以最后结果为标准，水平方向与前列相比较。如整齐，则表示有规则；反之，无规则。（但，如果有2行或2行以上不整齐时，则表示有规则） <br/> <br/>
+                    2) 在大路中出现换列的情况，以最后结果为标准，比较前列与前2列。如整齐，则表示有规则；反之，无规则。
+                </p>
+                <br/><br/>
+                <header>3.小路</header>
+                <img src="img/rules8.png" alt=""/> <br/><br/>
+                <p>小路是为了分析大路的规则性而产生的记录形式。  小路的起始点是以大路的第3列第2行开始分析记录(如果该位置没有结果，则以第4列第1行开始分析)。</p>
+                    <p>在小路中的 <span class="tip">颜色与庄、闲无关</span>，只表示 <span class="line">大路的规则性</span>。 (  <span><img
+                            src="img/icon7.png" alt=""/></span> - 表示有规则；<span><img src="img/icon8.png" alt=""/></span> - 表示无规则)
+                    小路的记录规则：
+                    1) 在大路中出现直落的情况，以最后结果为标准，水平方向与前2列相比较。如整齐，则表示有规则；反之，无规则。（但，如果有2行或2行以上不整齐时，则表示有规则） </p>
+                <p>2) 在大路中出现换列的情况，以最后结果为标准，比较前列与前3列。如整齐，则表示有规则；反之，无规则。</p>
+                <br/>
+                <header>4.曱甴路</header>
+                <img src="img/rules4.png" alt=""/>
+                <p>曱甴路是为了分析大路的规则性而产生的记录形式。曱甴路的起始点是以大路的第4列第2行开始分析记录(如果该位置没有结果，则以第5列第1行开始分析)。</p>
+                 <p> 在曱甴路中的颜色与庄、闲无关，只表示大路的规则性。( <span><img src="img/icon1.png" alt=""/></span>- 表示有规则； <span><img
+                         src="img/icon2.png" alt=""/></span>- 表示无规则)</p>
+                 <p> 曱甴路的记录规则：</p>
+                  <p>  1) 在大路中出现直落的情况，以最后结果为标准，水平方向与前3列相比较。如整齐，则表示有规则；反之，无规则。（但，如果有2行或2行以上不整齐时，则表示有规则）</p><br/>
+                  <p> 2) 在大路中出现换列的情况，以最后结果为标准，比较前列与前4列。如整齐，则表示有规则；反之，无规则。</p>
+
+                <header>5.珠盘路</header>
+                <img src="img/rules5.png" alt=""/>
+                <P>珠牌路是将游戏结果以 <span class="grep">每列6格</span>，<span class="line">依次</span>进行排列的记录形式。 其记录方向为从上至下、从左至右。</P>
+                <header>6.预测值</header>
+                <img src="img/rules9.png" alt=""/>
+                <p>预测值所表示的是在下一局出现庄或闲时，<span class="line">大眼仔路、小路、曱甴路</span>中，各自所显示的规则性。</p>
+                <p class="tip">(注):其颜色与庄、闲无关</p>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-1.11.3.js"></script>
+    <script src="js/bootstrap.js"></script>
+</body>
+</html>

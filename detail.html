@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <style>
+         body{
+            font-size: 10px;
+         }
+         .bg-color{
+             background: #322416;
+             color: #CDC3B4;
+         }
+         thead tr:first-child{
+             background: #322416;
+         }
+        .table{
+            background: #423430;
+        }
+        .table>tbody >tr >td{
+            padding: 8px 0;
+        }
+         .table>thead >tr >td{
+             padding: 14px 8px;
+         }
+
+         @media screen and (min-width:414px) {
+             .table>thead >tr >td{
+                 padding: 14px 14px;
+             }
+         }
+         @media screen and (max-width:320px) {
+             .table>thead >tr >td{
+                 padding: 14px 2px;
+             }
+         }
+        .table>tbody >tr >td.room{
+            padding: 23px 15px 0 15px;
+            background: #322416;
+        }
+        td:first-child{
+            width: 15%;
+        }
+        td:nth-child(2){
+            width: 25%;
+        }
+        tbody td:nth-child(3) ,td:nth-child(2){
+            text-align: left;
+        }
+        #bet{
+            padding-left: 25px;
+        }
+        .room{
+            color: #6cfaff;
+        }
+       .result,.after_bet{
+            color: #DC9C1C;
+        }
+        .settlement1{
+            color:#4EC90F;
+        }
+        .before_bet{
+            color: #C6191E;
+        }
+        .zhuang{
+            color: #C6191E;
+        }
+        .xian{
+            color: #3A8CD5;
+        }
+        .table tr {
+            border-bottom: 2px solid #5D4C46;
+        }
+           table thead .navbar-fixed-top{
+                height: 40px;
+            }
+      .word_red{
+          color:#f00;
+      }
+      .word_green{
+          color: #0f0;
+      }
+    </style>
+</head>
+<body class="bg-color">
+<div class="main" style="height:700px;overflow:auto;">
+    <table class="child table text-center" style='height:900px'>
+        <thead>
+            <tr class="navbar navbar-fixed-top">
+                <td>时间</td>
+                <td>投注项目/金额</td>
+                <td>结果</td>
+                <td>结算</td>
+                <td>投注前金额/后金额</td>
+            </tr>
+        </thead>
+        <tbody style="display: block;margin-top: 40px;"></tbody>
+    </table>
+</div>
+    <script src="js/jquery-1.11.3.js"></script>
+    <script>
+        var search=window.location.search;
+        if(search.length>0){
+            var userName=search.substring(search.indexOf("=")+1);
+        }
+
+       function getData(){
+            $.ajax({
+                type:"post",
+                url:"http://39.107.77.127:60601/user/gameDetails",
+                cache:false,
+                data:{"userName":userName},
+                success:function(data){
+                    if(data.meta.code==0){
+                        console.log(data);
+                        var html="";
+                        for(var i=0;i<data.data.length;i++){
+                            var arr= {"1":"A","2":"2","3":"3","4":"4","5":"5","6":"6","7":"7","8":"8","9":"9","10":"10","11":"J","12":"Q","13":"K","17":"A","18":"2","19":"3","20":"4","21":"5","22":"6","23":"7","24":"8","25":"9","26":"10","27":"J","28":"Q","29":"K","33":"A","34":"2","35":"3","36":"4","37":"5","38":"6","39":"7","40":"8","41":"9","42":"10","43":"J","44":"Q","45":"K","49":"A","50":"2","51":"3","52":"4","53":"5","54":"6","55":"7","56":"8","57":"9","58":"10","59":"J","60":"Q","61":"K"};
+                            var bankArr=JSON.parse(data.data[i].bank_cards).cards;
+                            var playArr=JSON.parse(data.data[i].play_cards).cards;
+                            var bankBoot="";
+                            var playBoot="";
+                            for(var j=0;j<bankArr.length;j++){
+                                bankBoot+=arr[bankArr[j]];
+                                if (j < bankArr.length-1){
+                                    bankBoot += ','
+                                }
+                            }
+                            for(var c=0;c<playArr.length;c++){
+                                playBoot+=arr[playArr[c]];
+                                if (c < playArr.length-1){
+                                    playBoot += ','
+                                }
+                            }
+                            html+=
+                                    '<tr><td class="room" colspan="5" style="text-align: left"><span>'+data.data[i].roomName+' &nbsp; &nbsp;'+data.data[i].table_id+'房间</span></td></tr><tr><td style="display: table-cell;vertical-align: middle">'+data.data[i].settle_time+'</td><td id="bet" style="display: table-cell;vertical-align: middle"> 庄:'+data.data[i].bank_bet+'</br> 闲:'+data.data[i].play_bet+'</br>庄对:'+data.data[i].bank_pair_bet+'</br>闲对:'+data.data[i].play_pair_bet+'</br> 和:'+data.data[i].tie_bet+'</td><td><span>庄:'+bankBoot+'</span><br/><span>闲:'+playBoot+'</span><br/><span class="result zhuang">'+(data.data[i].is_bank_win?"庄赢":"")+'</span><span class="result xian">'+(data.data[i].is_play_win?"闲赢":"")+'</span><span class="result zhuang">'+(data.data[i].is_bank_pair_win?"庄对":"")+'</span><span class="result xian">'+(data.data[i].is_play_pair_win?"闲对":"")+'</span><span class="result settlement1">'+(data.data[i].is_tie_win?"和":"")+'</span><br/></td><td style="display: table-cell;vertical-align: middle"><span class='+(data.data[i].after_bet_coin-data.data[i].before_bet_coin>=0?"word_green":"word_red")+'>'+(data.data[i].after_bet_coin-data.data[i].before_bet_coin)+'</span></td><td><span class="before_bet">'+data.data[i].before_bet_coin+'</span>/<span class="after_bet">'+data.data[i].after_bet_coin+'</span></td></tr>';
+                            $(".table tbody").html(html);
+                        }
+                    }
+                }
+            })
+         }
+       getData();
+
+        //首先需要监听window的滚动事件，下拉其实就是在监听window滚动事件
+        var pageNum = 1;//分页第一页
+        var pageTotal = 0;//默认总页数
+        $(window).scroll(function()  {
+            var scrollTop = $(this).scrollTop;//这一步是计算已经卷进去滚动条的的高度
+            var scrollHeight = $(document).height;//这个就算当前页面的总高度
+            var windowHeight = $(this).height;//这个是当前window也就是浏览器的高度
+            if (scrollTop + windowHeight == scrollHeight) {//如果这两个相等，不就意味着已经到了页面底部了吗？
+                pageNum += 1;//这是一个全局的变量，页面滑到底部就加一
+                next(pageNum);//完了执行你请求数据的函数
+            }
+        });
+        //说明：分页是有总页数的，当超过了总页数那么久不去请求，所以你在next做一些处理比如:你将第一次获取的数据中有总页数的这个参数，那么你赋值给
+        //pageTotal 那么以后的下拉中你可以
+        function next(pageNum) {
+            if (pageTotal != 0) {
+                if (pageNum > pageTotal) {
+                    return false; //当前页数大于总页数，就return
+                 }
+            }else{
+                 $.ajax({
+                    type:"post",
+                    url:"http://39.107.77.127:60601/user/gameDetails",
+                    cache:false,
+                    data:{"userName":userName},
+                    success:function(data){
+                        if(data.meta.code==0){
+                            var html="";
+                            for(var i=0;i<data.data.length;i++){
+                                var arr= {"1":"A","2":"2","3":"3","4":"4","5":"5","6":"6","7":"7","8":"8","9":"9","10":"10","11":"J","12":"Q","13":"K","17":"A","18":"2","19":"3","20":"4","21":"5","22":"6","23":"7","24":"8","25":"9","26":"10","27":"J","28":"Q","29":"K","33":"A","34":"2","35":"3","36":"4","37":"5","38":"6","39":"7","40":"8","41":"9","42":"10","43":"J","44":"Q","45":"K","49":"A","50":"2","51":"3","52":"4","53":"5","54":"6","55":"7","56":"8","57":"9","58":"10","59":"J","60":"Q","61":"K"};
+                                var bankArr=JSON.parse(data.data[i].bank_cards).cards;
+                                var playArr=JSON.parse(data.data[i].play_cards).cards;
+                                var bankBoot="";
+                                var playBoot="";
+                                for(var j=0;j<bankArr.length;j++){
+                                    bankBoot+=arr[bankArr[j]];
+                                    if (j < bankArr.length-1){
+                                        bankBoot += ','
+                                    }
+                                }
+                                for(var c=0;c<playArr.length;c++){
+                                    playBoot+=arr[playArr[c]];
+                                    if (c < playArr.length-1){
+                                        playBoot += ','
+                                    }
+                                }
+                                html+=
+                                        '<tr><td class="room" colspan="5" style="text-align: left"><span>'+data.data[i].roomName+' &nbsp; &nbsp;'+data.data[i].table_id+'房间</span></td></tr><tr><td style="display: table-cell;vertical-align: middle">'+data.data[i].settle_time+'</td><td style="display: table-cell;vertical-align: middle">'+(data.data[i].bank_bet?"庄":"闲")+'&nbsp;&nbsp;&nbsp;'+(data.data[i].bank_bet?data.data[i].bank_bet:data.data[i].play_bet)+'</td><td><span>庄:'+bankBoot+'</span><br/><span>闲:'+playBoot+'</span><br/><span class="result zhuang">'+(data.data[i].is_bank_win?"庄赢":"")+'</span><span class="result xian">'+(data.data[i].is_play_win?"闲赢":"")+'</span><span class="result zhuang">'+(data.data[i].is_bank_pair_win?"庄对":"")+'</span><span class="result xian">'+(data.data[i].is_play_pair_win?"闲对":"")+'</span><span class="result settlement1">'+(data.data[i].is_tie_win?"和":"")+'</span><br/></td><td style="display: table-cell;vertical-align: middle"><span class='+(data.data[i].after_bet_coin-data.data[i].before_bet_coin>=0?"word_green":"word_red")+'>'+(data.data[i].after_bet_coin-data.data[i].before_bet_coin)+'</span></td><td><span class="before_bet">'+data.data[i].before_bet_coin+'</span>/<span class="after_bet">'+data.data[i].after_bet_coin+'</span></td></tr>';
+                                $(".table tbody").html(html);
+                            }
+                        }
+                    }
+                })
+                }
+            }
+
+    </script>
+</body>
+</html>
